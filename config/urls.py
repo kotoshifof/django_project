@@ -16,6 +16,7 @@ urlpatterns = [
     path("users/", include("django_project.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("weather/", include("django_project.weather.urls", namespace="weather")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
