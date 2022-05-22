@@ -2,14 +2,14 @@ from django.utils.translation import gettext_lazy as _
 from django.apps import AppConfig
 
 
-# class WeatherConfig(AppConfig):
+# class CityConfig(AppConfig):
 #     default_auto_field = 'django.db.models.BigAutoField'
-#     name = 'weather'
+#     name = 'city'
 
 
-class WeatherConfig(AppConfig):
+class CityConfig(AppConfig):
     name = "django_project.weather"
-    verbose_name = _("Weather")
+    verbose_name = _("City")
 
     def ready(self):
         try:

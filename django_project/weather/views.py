@@ -15,17 +15,17 @@ class WeatherIndexView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         user = User.objects.get(pk=request.user.id)
-        weather_list = user.weather_set.all()
+        cities = user.city_set.all()
 
-        # userに結び付けられたcityをもとに天気情報を取得する
-        weather_info_list = []
-        for weather in weather_list:
+        # userに結び付けられたnameをもとに天気情報を取得する
+        weather_data_list = []
+        for city in cities:
             r = requests.get(
-                f'http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={weather.city}')
-            weather_info_list.append(r.json())
+                f'http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city.name}')
+            weather_data_list.append(r.json())
 
         context = {
-            'weather_info_list': weather_info_list,
+            'weather_data_list': weather_data_list,
         }
         template_name: str = "weather/weather_index.html"
         return TemplateResponse(request, template_name, context)

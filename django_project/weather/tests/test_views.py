@@ -9,6 +9,7 @@ import requests
 
 from django_project.users.models import User
 from django_project.users.tests.factories import UserFactory
+from django_project.weather.tests.factories import CityFactory
 from django_project.weather.views import weather_index_view
 
 pytestmark = pytest.mark.django_db
@@ -16,7 +17,7 @@ pytestmark = pytest.mark.django_db
 WEATHER_API_KEY = environ.get('WEATHER_API_KEY')
 
 
-class TestWeatherIndexView:
+class TestCityIndexView:
 
     # HACK 必要？ここでテストするべきか？
     def test_weather_api(self):
@@ -41,3 +42,11 @@ class TestWeatherIndexView:
         assert isinstance(response, HttpResponseRedirect)
         assert response.status_code == 302
         assert response.url == f"{login_url}?next=/fake-url/"
+
+    def test_authenticated(self, user: User, rf: RequestFactory):
+        request = rf.get("/fake-url/")
+        weather = CityFactory()
+
+        response = weather_index_view(request)
+
+        assert response.status_code == 201
