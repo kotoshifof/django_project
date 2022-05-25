@@ -13,3 +13,4 @@
 - bootstrapを使う
 
 - Django開発の流れを知る
+
