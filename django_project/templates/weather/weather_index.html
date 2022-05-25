@@ -35,7 +35,11 @@
             <small class="text-muted">{{ weather.current.last_updated}}</small>
           </div>
         <div class="col mt-auto p-2 d-flex">
-                    <button class="btn justify-content-end d-flex col" type="button"><i class="fa fa-trash"></i></button>
+           <form action='' method="post">
+    {% csrf_token %}
+                    <input type="hidden" name="city" value="{{ weather.location.name }}">
+                    <button class="btn justify-content-end d-flex col" type="submit"><i class="fa fa-trash"></i></button>
+</form>
           </div>
         </div>
       </div>

@@ -1,25 +1,18 @@
-from os import environ
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 from django.template.response import TemplateResponse
-import requests
+from django_project.weather.api import get_request_weather_data
 from django_project.weather.forms import CreateCityForm
 
 from django_project.weather.models import City
 
 User = get_user_model()
-WEATHER_API_KEY = environ.get('WEATHER_API_KEY')
-
-
-def get_request_weather_data(city: str) -> requests.Response:
-    return requests.get(
-        f'http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}')
 
 
 # userに結び付けられたcity.nameをもとに天気情報を取得する
@@ -47,6 +40,8 @@ class WeatherIndexView(LoginRequiredMixin, View):
         return TemplateResponse(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
+        if 'city' in request.POST:
+            return self.delete(request)
 
         form = CreateCityForm(request.POST)
         template_name: str = "weather/weather_index.html"
@@ -75,7 +70,14 @@ class WeatherIndexView(LoginRequiredMixin, View):
 
         city.user_id = request.user.id
         city.save()
+        messages.info(request, f"{city.name}を登録しました")
 
+        return HttpResponseRedirect(reverse('weather:index'))
+
+    def delete(self, request,):
+        city = request.POST['city']
+        request.user.city_set.filter(name=city).delete()
+        messages.error(request, f"{city}の登録を解除しました")
         return HttpResponseRedirect(reverse('weather:index'))
 
 

@@ -1,7 +1,6 @@
 from django import forms
-
+from django_project.weather.api import get_request_weather_data
 from django_project.weather.models import City
-from django_project.weather.views import get_request_weather_data
 
 
 class CreateCityForm(forms.ModelForm):
