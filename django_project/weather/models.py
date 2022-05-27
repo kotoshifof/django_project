@@ -9,5 +9,8 @@ class City(models.Model):
     class Meta:
         db_table = 'city'
         verbose_name = '都市'
+
+    def __str__(self):
+        return self.name
     name = CharField(_("name"), max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

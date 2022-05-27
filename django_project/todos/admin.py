@@ -1,3 +1,11 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
-# Register your models here.
+from .models import Todo
+
+
+class TodoAdmin(admin.ModelAdmin):
+    list_display = ('name', 'completed', 'ccreated_at', 'updated_at',)
+
+
+admin.site.register(Todo)
