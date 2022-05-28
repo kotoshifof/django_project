@@ -4,7 +4,7 @@
 
 ## Weather App
 
-### 目的
+> 目的
 
 - CRD
 
@@ -13,3 +13,16 @@
 - bootstrapを使う
 
 - Django開発の流れを知る
+
+## Todo App
+
+> 目的
+
+- CRUD
+
+- Jquery + Ajax
+
+
+## TODO
+
+- Loginページにリダイレクトするときにメッセージ表示

@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% load static %} {% block title %}Todo {% endblock %}
+{% block content %}
+<div class="container d-flex justify-content-center">
+  <div class="col-7">
+    <form id="todo" class="row m-3 g-3" onsubmit="return false" novalidate>
+      <div class="input-group mb-3">
+        {% for field in form %} {{field}}
+        <div class="input-group-append">
+          <button
+            id="todo-form-submit"
+            class="btn btn-primary"
+            type="submit"
+            disabled
+          >
+            追加
+          </button>
+        </div>
+        {% if field.errors %} {% for error in field.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %} {% endif %} {% endfor %} {% csrf_token %}
+      </div>
+    </form>
+    <div id="todo-list">
+      {% for todo in todo_list%}
+      <div id="todo{{todo.id}}" class="todo">
+        <input {% if todo.completed %} checked {% endif %} type = "checkbox" id
+        = "todo{{todo.id}}-completed" / > <input id = "todo{{todo.id}}-name"
+        class ="todo-name border-0" value = "{{todo.name}}" / >
+
+        <button class="todo-delete-submit btn" value="DELETE">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
