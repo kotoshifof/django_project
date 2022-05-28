@@ -1,1 +1,17 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% load static %} ////////////////////////////////////
+{% block content %}
+<div>
+  <h1>App List</h1>
+  <ul>
+    <li>
+      <a href="{% url 'weather:index' %}">Weather App</a>
+    </li>
+    <li>
+      <a href="{% url 'todos:index' %}">Todo App</a>
+    </li>
+    <li>
+      <a href="{% url 'sns:index' %}">SNS App</a>
+    </li>
+  </ul>
+</div>
+{% endblock content %}
